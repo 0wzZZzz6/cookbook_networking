@@ -4,6 +4,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import './model/post.dart';
+import './detail_screen.dart';
+
 Future<List<Post>> fetchPost() async {
   final response = await http.get('https://jsonplaceholder.typicode.com/posts');
 
@@ -15,24 +18,6 @@ Future<List<Post>> fetchPost() async {
   } else {
     // If the server did not return a 200 OK response, then throw an exception.
     throw Exception('Failed to load post');
-  }
-}
-
-class Post {
-  final int userId;
-  final int id;
-  final String title;
-  final String body;
-
-  Post({this.userId, this.id, this.title, this.body});
-
-  factory Post.fromJson(Map<String, dynamic> json) {
-    return Post(
-      userId: json['userId'],
-      id: json['id'],
-      title: json['title'],
-      body: json['body'],
-    );
   }
 }
 
@@ -50,6 +35,9 @@ ListTile _tile(String title, String body) {
   return ListTile(
     title: Text(title),
     subtitle: Text(body),
+    trailing: IconButton(icon: Icon(Icons.arrow_right), onPressed: () {
+      Navigator.pushNamed(context, routeName)
+    }),
   );
 }
 
@@ -99,6 +87,7 @@ class _MyAppState extends State<MyApp> {
           ),
         ),
       ),
+      routes: {DetailScreen.routeName: (context) => DetailScreen()},
     );
   }
 }
