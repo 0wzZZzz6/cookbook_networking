@@ -1,22 +1,20 @@
+import 'package:cookbook_networking/model/screen_arguments.dart';
 import 'package:flutter/material.dart';
-import './model/post.dart';
 
 class DetailScreen extends StatelessWidget {
   static const routeName = '/extractArguments';
 
   @override
   Widget build(BuildContext context) {
-    final Post args = ModalRoute.of(context).settings.arguments;
+    final ScreenArguments args = ModalRoute.of(context).settings.arguments;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Detail'),
+        title: Text(args.title),
       ),
       body: Center(
-          child: ListTile(
-        title: Text(args.title),
-        subtitle: Text(args.body),
-      )),
+        child: Text(args.body),
+      ),
     );
   }
 }
